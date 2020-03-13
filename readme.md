@@ -1,21 +1,22 @@
 # Zaawansowane Technologie Internetowe
 ## Przedmiot: bazy danych
 
-## Opis logowania (PHPMyAdmin, putty, Workbench)
+## **1.Instrukcja logowania poprzez MySQL Workbench**
 
-## **1. Tworzenie tabel i typy danych w bazach MySQL.**
+1.1 Uruchom program MySQL Workbench.
 
-Polecenie `CREATE, ALTER, DROP` są poleceniami DDL (Data Definition Language - język definicji danych), czyli takimi, które manipulują strukturą dla danych w bazie. Możemy tę strukturę tworzyć, modyfikować i usuwać.
-W tej części skupimy się na tworzeniu takich struktur i zaczniemy od tabel.
+![MySQL Workbench](workbench1.png)
 
-```sql
-CREATE TABLE osoba (id int auto_increment PRIMARY KEY);
-```
+1.2 Wybierz menu `Database` a następnie `Manage connections...`
 
+1.3 Kliknij na dole okna przycisk `New`.
 
-Lista typów danych : [typy danych MySQL](https://www.w3schools.com/sql/sql_datatypes.asp)
+1.4 Podaj dowolną nazwę w polu `Connection name:`. W polu `Hostname` podaj nazwę `bad.uwm.edu.pl`. Port powinien ustawiony na 3306. W polu `username` wpisz nazwę użytkownika podaną przez prowadzącego. Wybierz przycisk `Test connection`, aby sprawdzić czy połaczenie działa.
 
+1.5 W oknie, które się pojawiło wpisz hasło przekazane przez prowadzącego i wybierz `OK`. Jeżeli pojawi się okienko z ostrzeżeniem o niezgodności wersji Workbench i MySQL - zamknij je. Jeżeli pojawił się komunikat o pomyślnym połączeniu można zamknąć okno `Manage connections...`.
 
-## **2. Złączanie tabel**
-Złączanie tabel:
-!['Złączanie tabel'](./sql_joins.jpg)
+1.6 Jeżeli na głównym ekranie pod napisem MySQL Connections nie widać naszego utworzonego połączenia to wybierz z menu `Database` opcję `Connect to Database` i połącz się z bazą.
+
+Po pomyślnym połączeniu ekran powinien wyglądać podobnie do tego poniżej. Różnica będzie w liście baz (SCHEMAS).
+
+![MySQL Workbench](workbench2.png)
