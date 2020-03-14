@@ -20,3 +20,13 @@
 Po pomyślnym połączeniu ekran powinien wyglądać podobnie do tego poniżej. Różnica będzie w liście baz (SCHEMAS).
 
 ![MySQL Workbench](workbench2.png)
+
+## Zmiana hasła do bazy MySQL
+
+Można to zrobić poleceniem SQL:
+```sql
+SET PASSWORD FOR 'user'@'%'=PASSWORD('nowe_haslo');
+flush privileges;
+```
+
+Gdzie `user` zamieniamy na nazwę naszego użytkownika a `nowe_haslo` na nowe hasło, które chcemy ustawić.
