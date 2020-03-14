@@ -1,4 +1,4 @@
-# Zaawansowane Technologie Internetowe
+# Zaawansowane Technologie Informatyczne
 ## Przedmiot: bazy danych
 
 ## **1.Instrukcja logowania poprzez MySQL Workbench**
