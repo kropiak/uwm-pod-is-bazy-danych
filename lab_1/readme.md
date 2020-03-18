@@ -171,7 +171,7 @@ ALTER TABLE osoba MODIFY data_urodzenia int;
 Ziana nazwy i typu kolumny
 ALTER TABLE osoba CHANGE data_urodzenia data_ur date;
 
-Zmiana samej nazwy kolumny
+Zmiana samej nazwy kolumny (wersja 8.0 MySQL)
 ALTER TABLE osoba RENAME COLUMN data_ur TO data_urodzenia;
 
 Zmiana watości domyślnej w kolumnie
