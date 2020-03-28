@@ -23,7 +23,7 @@ SELECT imie, nazwisko FROM pracownik WHERE pensja < 4000;
 # pensja większa lub równa 3000 i mniejsza niż 4000
 SELECT imie, nazwisko FROM pracownik WHERE pensja < 4000 and pensja >= 3000;
 
-# co nie jest może intuicyjne na pierwszy rzut oka, operatory arytmetyczne (<,>, <=, =>) można
+# co nie jest może intuicyjne na pierwszy rzut oka, operatory arytmetyczne (<,>, <=, >=) można
 # również stosować do wartości tesktowych czy dat
 # poniższe zapytanie wyświetli imie i nazwisko gdzie imie jest alfabetycznie za imieniem Paweł
 SELECT imie, nazwisko FROM pracownik WHERE imie > 'Paweł';
