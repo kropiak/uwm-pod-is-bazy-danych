@@ -38,6 +38,6 @@ Wyświetl nazwę zamówienia, jego wartość (wszystkich jego pozycji) zarejestr
 
 **Zadanie 10**
 
-Wyświetl imie, nazwisko i sumę wartości zamówień, które dany pracownik złożył. Posortuj malejąco po sumie.
+Wyświetl imie, nazwisko i sumę wartości zamówień, które dany pracownik dodał. Posortuj malejąco po sumie.
 
 

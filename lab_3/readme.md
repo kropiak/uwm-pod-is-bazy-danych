@@ -219,7 +219,7 @@ SELECT zamowienie, group_concat(towar) FROM pozycja_zamowienia GROUP BY zamowien
 
 **Zadania**
 
-Pierwsza część zadań została umieszczona w pliku **lab_3_zadania_1.md**.
+Pierwsza część zadań została umieszczona w pliku [lab_3_zadania_1.md](lab_3_zadania_1.md).
 
 
 #### Warunki dla kolumn zagregowanych
@@ -230,6 +230,8 @@ Do tej pory warunki określaliśmy w części `WHERE` to dla kolumn, na których
 ```sql
 SELECT dzial, count(dzial) FROM pracownik GROUP BY dzial HAVING count(dzial) > 2;
 ```
+
+Druga część zadań została umieszczona w pliku [lab_3_zadania_2.md](lab_3_zadania_2.md).
 
 ## **Dodatkowe zasoby**
 
