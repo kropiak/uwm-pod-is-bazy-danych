@@ -35,6 +35,7 @@ Wyświetl wartość aktualnego stanu magazynowego z podziałem na kategorię pro
 **Zadanie 9**
 
 Przygotuj zapytanie, które wyświetli dane w poniższej postaci (policz ilu pracowników urodziło się w danym miesiącu - uwaga na porządek sortowania).
+
 ![tabela](./part_2_zad_9_.png)
 
 **Zadanie 10** *
