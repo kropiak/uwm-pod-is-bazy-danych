@@ -89,6 +89,7 @@ Funkcja `adddate` jest bardzo przydatna w momencie kiedy chcemy dodać do siebie
 SELECT ADDDATE(termin_platnosci, INTERVAL 14 DAY) FROM faktura;
 ```
 Funkcja, która odejmuje daty w podobny sposób to `subdate()`.
+Więcej informacji [tutaj](https://w3resource.com/mysql/date-and-time-functions/mysql-adddate-function.php)
 
 
 #### Funkcje year(data), month(data), day(data), hour(data), minute(data), second(data), microsecond(data)
@@ -148,7 +149,7 @@ SELECT count(distinct(nazwisko)) from pracownik;
 
 ### **3.4 Grupowanie danych i funkcje agregujące.**
 
-Grupowanie danych polega na ich złączaniu w zbiory o tej samej wartości w kolumnie (kolumnach), które zostały określone jako parametr wyrażenia `GROUP BY` (nie mylić z sortowaniem poprzez     `ORDER BY`).
+Grupowanie danych polega na ich złączaniu w zbiory o tej samej wartości w kolumnie (kolumnach), które zostały określone jako parametr wyrażenia `GROUP BY` (nie mylić z sortowaniem poprzez `ORDER BY`).
 
 Rozważmy poniższy przykład:
 
@@ -219,6 +220,16 @@ SELECT zamowienie, group_concat(towar) FROM pozycja_zamowienia GROUP BY zamowien
 **Zadania**
 
 Pierwsza część zadań została umieszczona w pliku **lab_3_zadania_1.md**.
+
+
+#### Warunki dla kolumn zagregowanych
+
+Do tej pory warunki określaliśmy w części `WHERE` to dla kolumn, na których używamy funkcji agregujących musimy to zrobić przez `HAVING`. Poniższy przykład wyświetli id działu, jego liczebność, jeżeli ta liczebność jest wieksza niż 2. Kolejność `GROUP BY` i `HAVING` nie jest przypadkowa.
+
+**Przykład:**
+```sql
+SELECT dzial, count(dzial) FROM pracownik GROUP BY dzial HAVING count(dzial) > 2;
+```
 
 ## **Dodatkowe zasoby**
 
