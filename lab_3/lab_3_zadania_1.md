@@ -34,7 +34,7 @@ Wyświetl 10 najczęściej sprzedawanych produktów.
 
 **Zadanie 9**
 
-Wyświetl nazwę zamówienia, jego wartość (wszystkich jego pozycji) zarejestrowanych w pierwszym kwartale 2017 roku.
+Wyświetl numer zamówienia, jego wartość (suma wartości wszystkich jego pozycji) zarejestrowanych w pierwszym kwartale 2017 roku.
 
 **Zadanie 10**
 
