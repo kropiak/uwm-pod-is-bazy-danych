@@ -79,6 +79,9 @@ Wyświetl pełną nazwę klienta oraz w kolejnej kolumnie 'rabat 5%' jeżeli ł�
 **Zadanie 5**  
 Jaki % łącznej sumy złożonych zamówień przypada na danego sprzedawcę ? Wyświetl 5 najlepszych sprzedawców wg tej wartości.
 
+**Zadanie 6**
+Korzystając z `CHECK` dodaj dwa dowolne warunki na wybranej przez siebie tabeli we własnej bazie danych. Sprawdź działanie warunku.
+
 
 ### **4.4 Wyzwalacze.**
 
@@ -156,7 +159,7 @@ $$
 DELIMITER ;
 ```
 
-### **4.3 Procedury i funkcje.**
+### **4.5 Procedury i funkcje.**
 
 Procedury i funkcje są strukturami, które podobnie jak wyzwalacze są przechowywane w konkretnej bazie danych. Tworzy się je wtedy kiedy istnieje potrzeba zebrania kilku operacji w jednym miejscu i wywoływania ich wielokrotnie dla różnych danych wejściowych.
 
