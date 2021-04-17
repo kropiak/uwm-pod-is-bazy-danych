@@ -113,6 +113,7 @@ SHOW CREATE trigger nazwa;
 ```
 
 Przykład nieco bardziej rozbudowanego wyzwalacza:
+
 **Przykład 5:**
 
 ```sql
