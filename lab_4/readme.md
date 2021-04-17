@@ -4,7 +4,7 @@
 
 W MySQL możemy również wykorzystać instrukcję warunkową, którą możemy określić wartość zwracaną w zapytaniu w zależności od wystąpienia określonej wartości warunku. Do dyspozycji mamy dwie funkcje: `ifnull` oraz `if`.
 
-**Przykład:**
+**Przykład 1:**
 ```sql
 # ta funkcja ma z góry określony warunek - NULL i w razie jego wystąpienia w kolumnie (pierwszy argument) zwróci wartość podaną jako drugi argument
 SELECT pelna_nazwa, ifnull(nip, 'osoba fizyczna') FROM __firma_zti.klient;
@@ -18,11 +18,15 @@ SELECT pelna_nazwa, if(isnull(nip), 'osoba fizyczna', 'firma') FROM __firma_zti.
 
 ### **4.2 Indeksy.**
 
-Indeksy są strukturami, które powodują uporządkowanie danych na dysku dla danej kolumny (kolumn) co powoduje znaczny wzrost szybkości wyszukiwania danych na kolumnie z indeksem. Biorąc to pod uwagę wydawać by się mogło, że założenie indeksów na wszystkie kolumny jest dobrym rozwiązaniem. Dlaczego w takiem razie nie jest to domyślna opcja ? Powodem jest marnowanie zasobów dyskowych w celu przechowywania informacji dla indeksów kolumn, po których wyszukiwanie nie odbywa się zbyt często oraz narzut czasowy MySQL na określenie, którego indeksu należy użyć jeżeli zapytanie dotyczy kilku kolumn. Jak w większości sytuacji - umiar jest wskazany i analiza historii zapytań lub specyfiki aplikacji korzystającej z bazy może tutaj wskazać odpowiednich kandydatów.
+Indeksy są strukturami, które powodują uporządkowanie danych na dysku dla danej kolumny (kolumn) co powoduje znaczny wzrost szybkości wyszukiwania danych na kolumnie z indeksem. Biorąc to pod uwagę wydawać by się mogło, że założenie indeksów na wszystkie kolumny jest dobrym rozwiązaniem. Dlaczego w takim razie nie jest to domyślna opcja ? Powodem jest marnowanie zasobów dyskowych w celu przechowywania informacji dla indeksów kolumn, po których wyszukiwanie nie odbywa się zbyt często oraz narzut czasowy MySQL na określenie, którego indeksu należy użyć jeżeli zapytanie dotyczy kilku kolumn. Jak w większości sytuacji - umiar jest wskazany i analiza historii zapytań lub specyfiki aplikacji korzystającej z bazy może tutaj wskazać odpowiednich kandydatów.
 
-Indeksy możemy utworzyć w momencie tworzenia tabeli danych lub poprzez jej modyfikację.
+Najczęściej indeksy są zorganizowane poprzez utworzenie B-drzewa lub B+drzewa (B-Tree, B+Tree), które pozwala na dość wydajny sposób dostępu do poszukiwanego elementu. Złożoność obliczeniowa dostępu, usunięcia elementu jest określona jako `O(log(n))`. Dość przystępny  video (w języku angielskim) wprowadzający w temat B-drzew można znaleźć pod adresem https://www.youtube.com/watch?v=C_q5ccN84C8.
 
-**Przykład:**
+MySQL tworzy automatycznie index w momencie kiedy dodawany jest klucz główny do tabeli (`PRIMARY KEY`) lub klucz unikalny (`UNIQUE KEY`). Ten rodzaj indeksu jest nieco inny niż pozostałe i nazywa się **indeksem klastrowym**. Każda tabela bazy MySQL pracująca na silniku InnoDB posiada jeden i zawsze jeden indeks klastrowy. Taki indeks powoduje fizyczne uporządkowanie wierszy w tabeli zgodnie z kolejnością wynikającą z kolumny z kluczem głównym lub unikalnym. Jeżeli dla tabeli nie określono klucz głównego mechanizm bazy szuka odpowiedniej kolumny, na której taki indeks zostanie założony. Najpierw poszukiwane są kolumny z atrybutem `UNIQUE`, a jeżeli i takiej brak to tworzona jest syntetyczna kolumna przechowująca identyfikatory wierszy i na niej zakładany jest taki indeks o nazwie `GEN_CLUST_INDEX`.  
+
+Poniżej przykład 'ręcznego' stworzenia indeksu.
+
+**Przykład 2:**
 ```sql
 CREATE TABLE czary_mary (nazwa_czaru VARCHAR(100), moc int(11), ksiega enum('magia ognia', 'magia wody', 'magia ziemi', 'magia powietrza'), index(nazwa_czaru));
 
@@ -31,12 +35,37 @@ CREATE TABLE czary_mary (nazwa_czaru VARCHAR(100), moc int(11), ksiega enum('mag
 CREATE INDEX nazwa_indeksu ON czary_mary(nazwa_czaru);
 ```
 
+### **4.3 Instrukcja CHECK**
+
+Począwszy od wersji 8.0.16 MySQL instrukcje `CHECK` są poprawnie interpretowane i można ich używać do osadzania prostych mechanizmów walidacji danych. W wersjach wcześniejszych polecenie było parsowane, ale ignorowane przez system bazodanowy MySQL.
+
+**Przykład 3:**
+```sql
+# przykład dodania warunku na kolumnie
+CREATE TABLE osoba (
+	imie VARCHAR(50) NOT NULL, 
+	nazwisko VARCHAR(50) NOT NULL, 
+	wiek INT(3) CHECK (wiek > 0), 
+	PRIMARY KEY (imie, nazwisko)
+);
+
+# przykład dodania warunku na tabeli
+CREATE TABLE osoba (
+	imie VARCHAR(50) NOT NULL, 
+	nazwisko VARCHAR(50) NOT NULL, 
+	wiek INT(3), 
+	PRIMARY KEY (imie, nazwisko),
+	CONSTRAINT wiek_check CHECK(wiek >= 0)
+);
+
+```
+
 ### **Ćwiczenia 1**
 
-W celu utrwalenia wiedzy z zadań poprzednich przygotuj rowzwiązania poniższych zadań:
+W celu utrwalenia wiedzy z zajęć poprzednich przygotuj rozwiązania poniższych zadań:
 
 **Zadanie 1**  
-Wyświetl imiona i nazwiska pracowników oraz daty ich urodzenia dla pracowników, którzy będą mieli urodziny w bieżącym miesiącu.
+Wyświetl imiona i nazwiska pracowników oraz daty ich urodzenia dla pracowników, którzy będą mieli urodziny w bieżącym miesiącu. Dane posortuj rosnąco wg dnia miesiąca.
 
 **Zadanie 2**  
 Wyświetl imię i nazwisko pracownika A i imię i nazwisko pracownika B, gdzie pracownik A jest co najmniej 10 lat młodszy od pracownika B (self join). Możesz też wyświetlić różnicę wieku w latach.
@@ -45,18 +74,18 @@ Wyświetl imię i nazwisko pracownika A i imię i nazwisko pracownika B, gdzie p
 Który miesiąc w całej historii sprzedaży firmy był najlepszy pod względym przychodu ?
 
 **Zadanie 4**  
-Wyświetl pełną nazwę klienta oraz w kolejnej kolumnie 'rabat 5%' jeżeli łaczna sprzedaż dla tego klienta przekroczyła 10000 lub 'brak rabatu' jeżeli wartość jest mniejsza.
+Wyświetl pełną nazwę klienta oraz w kolejnej kolumnie 'rabat 5%' jeżeli łączna sprzedaż dla tego klienta przekroczyła 10000 lub 'brak rabatu' jeżeli wartość jest mniejsza. Użyj instrukcji warunkowej.
 
 **Zadanie 5**  
-Jaki % łącznej sumy złożonych zamówień przypada na danego sprzedawcę ? Wyświetl 5 najlepszych sprzedawców.
+Jaki % łącznej sumy złożonych zamówień przypada na danego sprzedawcę ? Wyświetl 5 najlepszych sprzedawców wg tej wartości.
 
 
-### **4.3 Wyzwalacze.**
+### **4.4 Wyzwalacze.**
 
-Wyzwalacze są strukturami, które są automatycznie uruchamiane przez bazę danych w momencie, w którym warunek ich uruchomienia został spełniony. Takim warunkiem może być operacja wstawienia nowego rekordu, aktualizacji rekordu czy jego usunięcia (INSERT, UPDATE, DELETE). Operacje zadeklarowane w wyzwalaczu mogą zostać wykonane przed (BEFORE) lub po (AFTER) wystąpieniu zdarzenia.
-Jako, że domyślnym znakiem oddzielającym zapytania SQL od siebie jest `';'` a taki znak może wystąpić w 'ciele' wyzwalacza wielokrotnie powinniśmy najpierw zmienić ten domyślny ogranicznik na coś co ma małe szanse pokazać się w zapytaniu, np. `//` lub `&&`, które są spotykane najczęściej. Po zakończeniu bloku kodu wracamy do poprzednich ustawień.
+Wyzwalacze (ang. trigger) są strukturami, które są automatycznie uruchamiane przez bazę danych w momencie, w którym warunek ich uruchomienia został spełniony. Takim warunkiem może być operacja wstawienia nowego rekordu, aktualizacji rekordu czy jego usunięcia (INSERT, UPDATE, DELETE). Operacje zadeklarowane w wyzwalaczu mogą zostać wykonane przed (BEFORE) lub po (AFTER) wystąpieniu zdarzenia.
+Jako, że domyślnym znakiem oddzielającym zapytania SQL od siebie (ang. delimiter) jest `';'` a taki znak może wystąpić w 'ciele' wyzwalacza wielokrotnie, powinniśmy najpierw zmienić ten domyślny ogranicznik na coś co ma małe szanse wystąpić w zapytaniu, np. `//` lub `&&`, które są spotykane najczęściej. Po zakończeniu bloku kodu wracamy do poprzednich ustawień.
 
-**Przykład:**
+**Przykład 4:**
 ```sql
 DELIMITER //
 CREATE TRIGGER towar_before_insert
@@ -81,6 +110,7 @@ SHOW CREATE trigger nazwa;
 ```
 
 Przykład nieco bardziej rozbudowanego wyzwalacza:
+**Przykład 5:**
 
 ```sql
 DELIMITER $$
@@ -130,7 +160,7 @@ DELIMITER ;
 
 Procedury i funkcje są strukturami, które podobnie jak wyzwalacze są przechowywane w konkretnej bazie danych. Tworzy się je wtedy kiedy istnieje potrzeba zebrania kilku operacji w jednym miejscu i wywoływania ich wielokrotnie dla różnych danych wejściowych.
 
-**Przykład:**
+**Przykład 6:**
 ```sql
 DELIMITER $$
 CREATE PROCEDURE premia(IN id int)
@@ -166,7 +196,7 @@ W powyższej procedurze zadeklarowany jest zarówno parametr wejściowy jak i wy
 
 Procedura może również być bezparametryczna.
 
-**Przykład:**
+**Przykład 7:**
 ```sql
 DELIMITER $$
 CREATE PROCEDURE usun_nieaktywnych()
@@ -177,6 +207,60 @@ $$
 DELIMITER ;
 ```
 
+Korzystajac z procedur i wyzwalaczy możemy usprawnić mechanizm walidacji danych na poziomie bazy danych. Z racji tego, że w systemie MySQL nie możemy w ramach pojedynczego wyzwalacza określić kilku zdarzeń jego uruchomienia. Możemy jednak zamiast przepisywać ten sam kod ciała wyzwalacza uruchomić procedurę z jego wnętrza.
+Instrukcja `SIGNAL SQLSTATE '45000' ...` jest mechanizmem zwracającym komunikat (wyjątek) na wyjściu, a wartość 45000 oznacza 'unhandled user-defined exception' czyli poczynając od tego numeru możemy okreslać włane wyjątki dla konkretnej bazy danych. 
+Więcej: https://dev.mysql.com/doc/refman/8.0/en/signal.html
+
+
+**Przykład 8: Procedura porównująca cenę zakupu i sprzedaży.**
+
+```sql
+DELIMITER $
+
+CREATE PROCEDURE `check_cena_sprzedazy`(IN cena_zakupu DECIMAL(7,2), IN cena_sprzedazy DECIMAL(7,2))
+BEGIN
+    IF cena_zakupu < 0 THEN
+        SIGNAL SQLSTATE '45000'
+           SET MESSAGE_TEXT = 'Cena zakupu poniżej 0!';
+    END IF;
+    
+    IF cena_sprzedazy < 0 THEN
+	SIGNAL SQLSTATE '45001'
+	   SET MESSAGE_TEXT = 'Cena sprzedaży poniżej 0!';
+    END IF;
+    
+    IF cena_sprzedazy < cena_zakupu THEN
+	SIGNAL SQLSTATE '45002'
+           SET MESSAGE_TEXT = 'Cena sprzedazy ponizej ceny zakupu!';
+    END IF;
+END$
+DELIMITER ;
+```
+**I wyzwalacze:**
+
+```sql
+DELIMITER $
+CREATE TRIGGER `pozycja_zamowienia_before_insert` BEFORE INSERT ON `pozycja_zamowienia`
+FOR EACH ROW
+BEGIN
+	DECLARE koszt DECIMAL(7,2);
+	SELECT cena_zakupu INTO koszt FROM towar WHERE id_towaru=new.towar;
+    CALL check_cena_sprzedazy(koszt, new.cena);
+END$   
+DELIMITER ; 
+
+DELIMITER $
+CREATE TRIGGER `pozycja_zamowienia_before_update` BEFORE UPDATE ON `pozycja_zamowienia`
+FOR EACH ROW
+BEGIN
+	DECLARE koszt DECIMAL(7,2);
+	SELECT cena_zakupu INTO koszt FROM towar WHERE id_towaru=new.towar;
+    CALL check_cena_sprzedazy(koszt, new.cena);
+END$   
+DELIMITER ;
+```
+
+
 Przykłady i więcej informacji o procedurach mozna znaleźć pod adresami:
 * [W3resource MySQL Procedures](https://www.w3resource.com/mysql/mysql-procedure.php)
 * [PG GDA Procedury](http://www.mif.pg.gda.pl/homepages/mate/bazy_danych/procedury.html)
@@ -184,7 +268,7 @@ Przykłady i więcej informacji o procedurach mozna znaleźć pod adresami:
 
 Funkcje to nic innego jak struktury, z których korzystaliśmy wielokrotnie używając funkcji wbudowanych. Jednak teraz możemy zdefiniować je na własne potrzeby w danej bazie. Są podobne do procedur w konstrukcji kodu, ale sposób ich wywołania jest inny.
 
-**Przykład:**
+**Przykład 9:**
 ```sql
 DELIMITER //
 CREATE FUNCTION count_pracownicy()
@@ -198,9 +282,10 @@ END //
 select count_pracownicy();
 ```
 
-Warto wspomnieć o innych różnicach między funkcjami a procedurami aby rozwiać wątpliwości, że zawsze można ich używać zamiennie (w sensie ich samodzielnego tworzenia). Otóż funkcje mają kilka istotnych ograniczeń względem procedur i nie możemy korzystać z transakcji (przynajmniej nie w wersji MySQL, z któryj korzystamy na zajęciach). Transakcja to operacja (lub zbiór operacji), które dzięki mechanizmom bazy danych pozwala na ich atomowe wykonanie i przywrócenie zmian, jeżeli jedna z operacji się nie powiedzie. Transakcje mają dużo więcej cech, ale jest to temat na kolejne laboratoria.
+Warto wspomnieć o innych różnicach między funkcjami a procedurami aby rozwiać wątpliwości, że zawsze można ich używać zamiennie (dla funkjci i procedur tworzonych przez użytkownika). Otóż funkcje mają kilka istotnych ograniczeń względem procedur i nie możemy korzystać z transakcji (przynajmniej nie w wersji MySQL, z któryj korzystamy na zajęciach). Transakcja to operacja (lub zbiór operacji), które dzięki mechanizmom bazy danych pozwala na ich atomowe wykonanie i przywrócenie zmian, jeżeli jedna z operacji się nie powiedzie. Transakcje mają dużo więcej cech, ale jest to temat na kolejne laboratoria.
 
 W funkcjach nie są dozwolone poniższe polecenia SQL:
+
 ```sql
 ALTER 'CACHE INDEX' CALL COMMIT CREATE DELETE
 DROP 'FLUSH PRIVILEGES' GRANT INSERT KILL
@@ -209,8 +294,6 @@ ROLLBACK SAVEPOINT 'SELECT FROM table'
 'SET zmienna_systemowa' 'SET TRANSACTION'
 SHOW 'START TRANSACTION' TRUNCATE UPDATE
 ```
-
-
 
 
 Oficjalna dokumentacja odnośnie tworzenia własnych funkcji: [MySQL Functions](https://dev.mysql.com/doc/refman/5.7/en/create-function-udf.html) i [User Defined Functions](https://dev.mysql.com/doc/refman/5.7/en/adding-udf.html)
@@ -222,10 +305,10 @@ Wykład Doktora Pawła Drozdy nt. wyzwalaczy, procedur i funkcji - http://wmii.u
 ### **Ćwiczenia 2**
 
 **Zadanie 1**  
-Utwórz kopię lokalną bazy firma_zti.
+Utwórz kopię lokalną bazy firma_zti. Wykorzystaj funkcję 'Export' oraz 'Import' z MySQL Workbench.
 
 **Zadanie 2**  
-Napisz wyzwalacza, który w momencie dodawania nowego rekordu do tabeli pracownik sprawdzi czy pensja nie jest mniejsza od najniższej krajowej (wstaw dowolną wartość). Jeżeli tak to wstawi wartość najniższej krajowej.
+Napisz wyzwalacz, który w momencie dodawania nowego rekordu do tabeli pracownik sprawdzi czy pensja nie jest mniejsza od najniższej krajowej (wstaw dowolną wartość). Jeżeli tak to wstawi wartość najniższej krajowej.
 
 **Zadanie 3**  
 Stwórz nową tabelę o nazwie `zamowienia_usuniete`, która będzie zawierała kolumny id_pozycji, numer_zamowienia, data_zamowienia, imie_pracownika, nazwisko_pracownika, pelna_nazwa_klienta, nazwa_towaru, ilosc, nazwa_jm, cena (sprzedaży). Typy kolumn dopasuj tak, żeby odpowiadały kolumnom z bazy firma_zti.
