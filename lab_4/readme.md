@@ -340,7 +340,7 @@ Stwórz nową tabelę o nazwie `zamowienia_usuniete`, która będzie zawierała 
 Napisz wyzwalacz, który w momencie próby usunięcia rekordu z tabeli zamowienie wstawi rekordy do tabeli `zamowienie_usuniete`. Przetestuj jego działanie.
 
 **Zadanie 5**  
-Napisz procedurę o nazwie `podnies_ceny`, która podniesie ceny wszystkich towarów danej kategorii i podany procent. Mamy więc dwa parametry wejściowe: id_kategorii oraz wartość podwyżki.
+Napisz procedurę o nazwie `podnies_ceny`, która podniesie ceny wszystkich towarów danej kategorii o podany procent. Mamy więc dwa parametry wejściowe: id_kategorii oraz wartość podwyżki.
 
 **Zadanie 6**  
 Napisz funkcję o nazwie `inicjaly()`, która przyjmuje id pracownika jako parametr wejściowy a zwraca inicjały danego pracownika w postaci np. A.Z. dla Adam Zaręba. Wyświetl zapytaniem select i wykorzystując tę funkcję wszystkich pracowników urodzonych w maju.
