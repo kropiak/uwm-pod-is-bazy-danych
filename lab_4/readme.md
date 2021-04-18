@@ -286,21 +286,40 @@ END //
 select count_pracownicy();
 ```
 
-Warto wspomnieć o innych różnicach między funkcjami a procedurami aby rozwiać wątpliwości, że zawsze można ich używać zamiennie (dla funkjci i procedur tworzonych przez użytkownika). Otóż funkcje mają kilka istotnych ograniczeń względem procedur i nie możemy korzystać z transakcji (przynajmniej nie w wersji MySQL, z któryj korzystamy na zajęciach). Transakcja to operacja (lub zbiór operacji), które dzięki mechanizmom bazy danych pozwala na ich atomowe wykonanie i przywrócenie zmian, jeżeli jedna z operacji się nie powiedzie. Transakcje mają dużo więcej cech, ale jest to temat na kolejne laboratoria.
+Warto wspomnieć o innych różnicach między funkcjami a procedurami aby rozwiać wątpliwości, że zawsze można ich używać zamiennie (dla funkcji i procedur tworzonych przez użytkownika). Otóż funkcje mają kilka istotnych ograniczeń względem procedur i nie możemy korzystać z transakcji (przynajmniej nie w wersji MySQL, z której korzystamy na zajęciach). Transakcja to operacja (lub zbiór operacji), które dzięki mechanizmom bazy danych pozwala na ich atomowe wykonanie i przywrócenie zmian, jeżeli jedna z operacji się nie powiedzie. 
 
 W funkcjach nie są dozwolone poniższe polecenia SQL:
 
 ```sql
-ALTER 'CACHE INDEX' CALL COMMIT CREATE DELETE
-DROP 'FLUSH PRIVILEGES' GRANT INSERT KILL
-LOCK OPTIMIZE REPAIR REPLACE REVOKE
-ROLLBACK SAVEPOINT 'SELECT FROM table'
-'SET zmienna_systemowa' 'SET TRANSACTION'
-SHOW 'START TRANSACTION' TRUNCATE UPDATE
+ALTER
+'CACHE INDEX' 
+CALL 
+COMMIT 
+CREATE 
+DELETE
+DROP 
+'FLUSH PRIVILEGES' 
+GRANT 
+INSERT 
+KILL
+LOCK 
+OPTIMIZE 
+REPAIR 
+REPLACE 
+REVOKE
+ROLLBACK 
+SAVEPOINT 
+'SELECT FROM table'
+'SET zmienna_systemowa' 
+'SET TRANSACTION'
+SHOW 
+'START TRANSACTION' 
+TRUNCATE 
+UPDATE
 ```
 
 
-Oficjalna dokumentacja odnośnie tworzenia własnych funkcji: [MySQL Functions](https://dev.mysql.com/doc/refman/5.7/en/create-function-udf.html) i [User Defined Functions](https://dev.mysql.com/doc/refman/5.7/en/adding-udf.html)
+Oficjalna dokumentacja odnośnie tworzenia własnych funkcji: [MySQL Functions](https://dev.mysql.com/doc/refman/8.0/en/create-function-udf.html) i [User Defined Functions](https://dev.mysql.com/doc/refman/8.0/en/adding-udf.html)
 
 Wykład Doktora Pawła Drozdy nt. wyzwalaczy, procedur i funkcji - http://wmii.uwm.edu.pl/~pdrozda/pliki/wyk8.ppt
 
@@ -309,7 +328,7 @@ Wykład Doktora Pawła Drozdy nt. wyzwalaczy, procedur i funkcji - http://wmii.u
 ### **Ćwiczenia 2**
 
 **Zadanie 1**  
-Utwórz kopię lokalną bazy firma_zti. Wykorzystaj funkcję 'Export' oraz 'Import' z MySQL Workbench.
+Utwórz kopię lokalną bazy __firma_zti. Wykorzystaj funkcję 'Export' oraz 'Import' z MySQL Workbench.
 
 **Zadanie 2**  
 Napisz wyzwalacz, który w momencie dodawania nowego rekordu do tabeli pracownik sprawdzi czy pensja nie jest mniejsza od najniższej krajowej (wstaw dowolną wartość). Jeżeli tak to wstawi wartość najniższej krajowej.
@@ -321,7 +340,7 @@ Stwórz nową tabelę o nazwie `zamowienia_usuniete`, która będzie zawierała 
 Napisz wyzwalacz, który w momencie próby usunięcia rekordu z tabeli zamowienie wstawi rekordy do tabeli `zamowienie_usuniete`. Przetestuj jego działanie.
 
 **Zadanie 5**  
-Napisz procedurę o nazwie podnies_ceny, która podniesie ceny wszystkich towarów danej kategorii i podany procent. Mamy więc dwa parametry wejściowe: id_kategorii oraz wartość podwyżki.
+Napisz procedurę o nazwie `podnies_ceny`, która podniesie ceny wszystkich towarów danej kategorii i podany procent. Mamy więc dwa parametry wejściowe: id_kategorii oraz wartość podwyżki.
 
 **Zadanie 6**  
-Napisz funkcję o nazwie inicjaly(), która przyjmuje id pracownika jako parametr wejściowy a zwraca inicjały danego pracownika w postaci np. A.Z. dla Adam Zaręba. Wyświetl zapytaniem select i wykorzystując tę funkcję wszystkich pracowników urodzonych w maju.
+Napisz funkcję o nazwie `inicjaly()`, która przyjmuje id pracownika jako parametr wejściowy a zwraca inicjały danego pracownika w postaci np. A.Z. dla Adam Zaręba. Wyświetl zapytaniem select i wykorzystując tę funkcję wszystkich pracowników urodzonych w maju.
