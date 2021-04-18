@@ -175,7 +175,7 @@ $$
 DELIMITER ;
 ```
 
-Następnie procedurę wywołujemy poprzez słowo `CALL`.
+Następnie procedurę wywołujemy poprzez instrukcję `CALL`.
 
 ```sql
 CALL premia(10)
@@ -196,7 +196,7 @@ CALL przedstaw_sie(10, @p);
 select @p;
 ```
 
-W powyższej procedurze zadeklarowany jest zarówno parametr wejściowy jak i wyjściowy. Następnie w zapytaniu select wartość zwracana zapisywana jest do zmiennej. Następnie w wywołaniu procedury podawana jest nazwa lokalnej zmiennej, do której wartość zwracana przez procedurę zostanie zapisana. I ostatecznie poprzez SELECT wartość zmiennej jest wyświetlana.
+W powyższej procedurze zadeklarowany jest zarówno parametr wejściowy jak i wyjściowy. Następnie w zapytaniu select wartość zwracana zapisywana jest do zmiennej. Dalej w wywołaniu procedury użyta jest nazwa lokalnej zmiennej, do której wartość zwracana przez procedurę zostanie zapisana (`SELECT ... INTO zmienna`). I ostatecznie poprzez `SELECT @p` wartość zmiennej jest wyświetlana.
 
 Procedura może również być bezparametryczna.
 
@@ -211,8 +211,8 @@ $$
 DELIMITER ;
 ```
 
-Korzystajac z procedur i wyzwalaczy możemy usprawnić mechanizm walidacji danych na poziomie bazy danych. Z racji tego, że w systemie MySQL nie możemy w ramach pojedynczego wyzwalacza określić kilku zdarzeń jego uruchomienia. Możemy jednak zamiast przepisywać ten sam kod ciała wyzwalacza uruchomić procedurę z jego wnętrza.
-Instrukcja `SIGNAL SQLSTATE '45000' ...` jest mechanizmem zwracającym komunikat (wyjątek) na wyjściu, a wartość 45000 oznacza 'unhandled user-defined exception' czyli poczynając od tego numeru możemy okreslać włane wyjątki dla konkretnej bazy danych. 
+Korzystajac z procedur i wyzwalaczy możemy usprawnić mechanizm walidacji danych na poziomie bazy. Z racji tego, że w systemie MySQL nie możemy w ramach pojedynczego wyzwalacza określić kilku zdarzeń jego uruchomienia. Możemy jednak zamiast przepisywać ten sam kod ciała wyzwalacza uruchomić procedurę z jego wnętrza.
+Instrukcja `SIGNAL SQLSTATE '45000' ...` jest mechanizmem zwracającym komunikat (wyjątek) na wyjściu, a wartość 45000 oznacza 'unhandled user-defined exception' czyli poczynając od tego numeru możemy okreslać włane wyjątki dla konkretnej bazy danych, opisując je następnie komunikatami, które mogą znaleźć się również w finalnej dokumentacji projektu ułatwiając analizę zdarzeń. 
 Więcej: https://dev.mysql.com/doc/refman/8.0/en/signal.html
 
 
