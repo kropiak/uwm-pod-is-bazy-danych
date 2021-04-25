@@ -178,3 +178,10 @@ Listę uprawnień dla danego konta najszybciej zdobędziemy poleceniem:
 ```sql
 SHOW GRANTS FOR user@host;
 ```
+
+
+> Zadania
+
+**Scenariusz**
+
+Stwórz nową bazę o nazwie **test**. Dodaj do niej jakąś tabelę (może kopia istniejącej ?). Utwórz nowego użytkownika o nazwie **czytacz**, który będzie miał uprawnienia tylko do pobierania wierszy z bazy **test** z hosta **localhost**. Użytkownik powinien posiadać również możliwość podłączenia się do tej bazy (zalogowania). Przetestuj poleceniami SQL poprawność uprawnień logując się utworzonym kontem.
