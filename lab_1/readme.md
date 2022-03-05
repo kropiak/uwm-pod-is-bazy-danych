@@ -197,7 +197,7 @@ W przykładzie ze zmianą nazwy tabeli po raz pierwszy pojawiły się znaki ``(b
 
 ## **Zadania**
 
-Wykonaj zadania z pliku zadania_1.md a rozwiązania zapisuj w pliku tekstowym do późniejszego wykorzystania.
+Wykonaj zadania z pliku [zadania_1.md](zadania_1.md) a rozwiązania zapisuj w pliku tekstowym do późniejszego wykorzystania i przesłania prowadzącemu.
 
 
 ## **4. Klucze obce**
@@ -254,4 +254,4 @@ ALTER TABLE student ADD CONSTRAINT nazwa_klucza FOREIGN KEY (uczelnia) REFERENCE
 
 ## **Zadania**
 
-Wykonaj zadania z pliku zadania_2.md a rozwiązania zapisuj w pliku tekstowym do późniejszego wykorzystania.
+Wykonaj zadania z pliku [zadania_2.md](zadania_2.md) a rozwiązania zapisuj w pliku tekstowym do późniejszego wykorzystania.
