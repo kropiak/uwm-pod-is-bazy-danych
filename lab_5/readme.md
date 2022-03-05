@@ -143,7 +143,7 @@ GRANT SELECT
 ON *.* 
 TO jkowalski@localhost;
 
-# pooziom bazy
+# poziom bazy
 GRANT INSERT 
 ON __firma_zti.* 
 TO jkowalski@localhost;

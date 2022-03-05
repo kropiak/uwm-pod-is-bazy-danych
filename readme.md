@@ -1,32 +1,23 @@
 # Zaawansowane Technologie Informatyczne
-## Przedmiot: bazy danych
+## _Przedmiot: bazy danych_
 
-## **1.Instrukcja logowania poprzez MySQL Workbench**
+### **1. Cel przedmiotu**
 
-1.1 Uruchom program MySQL Workbench.
+Celem przedmiotu jest przedstawienie studentom podstaw i średniozaawansowanych zagadnień związanych z językiem SQL w oparciu o silnik bazy danych MySQL. 
 
-![MySQL Workbench](workbench1.png)
+Po zapoznaniu się z podstawami oraz modelem relacyjnym przedstawiony zostanie również problem modelowania związków encji i dostępnych narzędzi wspomagających tworzenie takich modeli.
 
-1.2 Wybierz menu `Database` a następnie `Manage connections...`
+W trakcie zajęć poruszone zostaną rónież podstawowe zagadnienia związane z administracją bazą danych takie jak tworzenie baz, tworzenie kont i zarządzanie uprawnieniami, archiwizacja i odtwarzanie bazy danych.
 
-1.3 Kliknij na dole okna przycisk `New`.
+### **2. Zaliczenie przedmiotu**
 
-1.4 Podaj dowolną nazwę w polu `Connection name:`. W polu `Hostname` podaj nazwę `bad.uwm.edu.pl`. Port powinien ustawiony na 3306. W polu `username` wpisz nazwę użytkownika podaną przez prowadzącego. Wybierz przycisk `Test connection`, aby sprawdzić czy połaczenie działa.
+Zaliczenie przedmiotu odbędzie się na podstawie oceny pracy studenta w trakcie zajęć oraz wykonaniu zadań do samodzielnego wykonania.
 
-1.5 W oknie, które się pojawiło wpisz hasło przekazane przez prowadzącego i wybierz `OK`. Jeżeli pojawi się okienko z ostrzeżeniem o niezgodności wersji Workbench i MySQL - zamknij je. Jeżeli pojawił się komunikat o pomyślnym połączeniu można zamknąć okno `Manage connections...`.
+### **3. Materiały**
 
-1.6 Jeżeli na głównym ekranie pod napisem MySQL Connections nie widać naszego utworzonego połączenia to wybierz z menu `Database` opcję `Connect to Database` i połącz się z bazą.
-
-Po pomyślnym połączeniu ekran powinien wyglądać podobnie do tego poniżej. Różnica będzie w liście baz (SCHEMAS).
-
-![MySQL Workbench](workbench2.png)
-
-## Zmiana hasła do bazy MySQL
-
-Można to zrobić poleceniem SQL:
-```sql
-SET PASSWORD FOR 'user'@'%'=PASSWORD('nowe_haslo');
-flush privileges;
-```
-
-Gdzie `user` zamieniamy na nazwę naszego użytkownika a `nowe_haslo` na nowe hasło, które chcemy ustawić.
+Materiały są udostępniane studentm w tym repozytorium, ale jako dodatkowe, komplementarne źródła wiedzy student powinien wykorzystać:
+* Oficjaną dokumentację: https://dev.mysql.com/doc/,
+* szczególnie dla wersji wykorzystywanej na zajęciach: https://dev.mysql.com/doc/refman/8.0/en/
+* jedną z lepszych niezależnych stron omawiających MySQL: https://www.mysqltutorial.org/
+* tradycyjnie już W3Schools: https://www.w3schools.com/mySQl/default.asp
+* Kanal Pasja Informatyki w serwisie YouTube, gdzie można znaleźć wiele interesujących materiałów, również kurs MySQL: https://www.youtube.com/channel/UCzn6vAfspIcagLax1fck_jw
