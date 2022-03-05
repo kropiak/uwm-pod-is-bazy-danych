@@ -48,6 +48,7 @@ CHAR | | (bez "m") jest uważane za CHAR(1)
 | ENUM('item1','item2',...) | | - tablica z góry przygotowanych łańcuchów (itemów) o maks. ilości 65 535 - w polu tabeli może się znaleźć tylko jeden z itemów, które zostały z góry przygotowane - zamiast nazwy 'item' można stosować również ich kolejność, a więc: 1 (zamiast 'item1'), 2 (zamiast 'item2')...
 | SET('item1','item2',...) | |	- tablica z góry definiowanych łańcuchów (itemów) o maks. ilości 64 - w polu tablicy może się znaleźć nawet kilka itemów, które są z góry zdefiniowane
 
+Dokumentacja odnośnie typów danych dostępna jest pod adresem: https://dev.mysql.com/doc/refman/8.0/en/data-types.html
 
 **Rozpatrzmy kolejny przykład:**
 ```sql
