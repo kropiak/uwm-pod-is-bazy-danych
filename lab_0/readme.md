@@ -18,6 +18,9 @@
 
 ## **2.Instrukcja logowania poprzez MySQL Workbench**
 
+Program możemy pobrać z adresu: https://dev.mysql.com/downloads/workbench/
+
+
 2.1 Serwer MySQL nie jest dostępny na zewnątrz (jego port nie jest wystawiony przez zaporę), więc aby połączyć się z nim musimy utworzyć tunel SSH łączący komputer lokalny z serwerem na porcie 3306 (domyślny port serwera MySQL). Należy to zrobić w opcjach programu Putty w zakładce `Connection -> SSH -> Tunnels` i podać dane tak jak na zrzucie poniżej. Następnie klikamy przycisk `Add` i na liście powyżej powinien pojawić się wpis jak na zrzucie.
 
 ![Konfiguracja Putty](putty_conf.png)
