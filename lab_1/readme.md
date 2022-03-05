@@ -14,6 +14,8 @@ ze zdefiniowaną domyślną wartością kolumny
 CREATE TABLE osoba (id int, plec enum('K','M') default 'K');
 ```
 
+Dokumentacja polecenia CREATE -> https://dev.mysql.com/doc/refman/8.0/en/create-table.html
+
 Powyższe polecenie stworzy tabelę o nazwie `osoba` z jedną kolumną o nazwie `id`, która może przechowywać wartości liczbowe całkowite.
 
 Tworząc projekt bazy danych pod konkretne rozwiązanie należy wybrać najbardziej optymalne typy danych dla dziedziny, którą chcemy zamodelować. Rozumie się przez to odpowiedni format oraz wielkość pamięci, która jest niezbędna dla przechowania jednej wartości danego typu. Np. dla przechowania imienia dowolnej osoby powinien nam wystarczyć typ `TINYTEXT`, który pozwala zachować do 255 znaków. Są też inne typy tekstowe, np. `VARCHAR`, który pozwala przechować do 65,535 znaków (bajtów). Jednak to jest maksymalna długość całego wiersza tabeli oraz wartość jest różna w zależności od wybranego kodowania znaków bazy. Typ `MEDIUMTEXT` pozwala na zapisanie 16,777,215 znaków i też się nada, ale niewłaściwe użycie spowoduje wykorzystanie znacznie większej ilości pamięci (RAM jak i dyskowej) niż faktycznie jest to potrzebne.
