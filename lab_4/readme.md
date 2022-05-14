@@ -20,9 +20,9 @@ SELECT pelna_nazwa, if(isnull(nip), 'osoba fizyczna', 'firma') FROM __firma_zti.
 
 Indeksy są strukturami, które powodują uporządkowanie danych na dysku dla danej kolumny (kolumn) co powoduje znaczny wzrost szybkości wyszukiwania danych na kolumnie z indeksem. Biorąc to pod uwagę wydawać by się mogło, że założenie indeksów na wszystkie kolumny jest dobrym rozwiązaniem. Dlaczego w takim razie nie jest to domyślna opcja ? Powodem jest marnowanie zasobów dyskowych w celu przechowywania informacji dla indeksów kolumn, po których wyszukiwanie nie odbywa się zbyt często oraz narzut czasowy MySQL na określenie, którego indeksu należy użyć jeżeli zapytanie dotyczy kilku kolumn. Jak w większości sytuacji - umiar jest wskazany i analiza historii zapytań lub specyfiki aplikacji korzystającej z bazy może tutaj wskazać odpowiednich kandydatów.
 
-Najczęściej indeksy są zorganizowane poprzez utworzenie B-drzewa lub B+drzewa (B-Tree, B+Tree), które pozwala na dość wydajny sposób dostępu do poszukiwanego elementu. Złożoność obliczeniowa dostępu, usunięcia elementu jest określona jako `O(log(n))`. Dość przystępny  video (w języku angielskim) wprowadzający w temat B-drzew można znaleźć pod adresem https://www.youtube.com/watch?v=C_q5ccN84C8.
+Najczęściej indeksy są zorganizowane poprzez utworzenie B-drzewa lub B+drzewa (B-Tree, B+Tree), które pozwala na dość wydajny sposób dostępu do poszukiwanego elementu. Złożoność obliczeniowa dostępu, usunięcia elementu jest określona jako `O(log(n))`. Dość przystępne  video (w języku angielskim) wprowadzające w temat B-drzew można znaleźć pod adresem https://www.youtube.com/watch?v=C_q5ccN84C8. Film w języku polskim: https://www.youtube.com/watch?v=MpL0CVo2yBY
 
-MySQL tworzy automatycznie index w momencie kiedy dodawany jest klucz główny do tabeli (`PRIMARY KEY`) lub klucz unikalny (`UNIQUE KEY`). Ten rodzaj indeksu jest nieco inny niż pozostałe i nazywa się **indeksem klastrowym**. Każda tabela bazy MySQL pracująca na silniku InnoDB posiada jeden i zawsze jeden indeks klastrowy. Taki indeks powoduje fizyczne uporządkowanie wierszy w tabeli zgodnie z kolejnością wynikającą z kolumny z kluczem głównym lub unikalnym. Jeżeli dla tabeli nie określono klucz głównego mechanizm bazy szuka odpowiedniej kolumny, na której taki indeks zostanie założony. Najpierw poszukiwane są kolumny z atrybutem `UNIQUE`, a jeżeli i takiej brak to tworzona jest syntetyczna kolumna przechowująca identyfikatory wierszy i na niej zakładany jest taki indeks o nazwie `GEN_CLUST_INDEX`.  
+MySQL tworzy automatycznie index w momencie kiedy dodawany jest klucz główny do tabeli (`PRIMARY KEY`) lub klucz unikalny (`UNIQUE KEY`). Ten rodzaj indeksu jest nieco inny niż pozostałe i nazywa się **indeksem klastrowym**. Każda tabela bazy MySQL pracująca na silniku InnoDB posiada jeden i zawsze jeden indeks klastrowy. Taki indeks powoduje fizyczne uporządkowanie wierszy w tabeli zgodnie z kolejnością wynikającą z kolumny z kluczem głównym lub unikalnym. Jeżeli dla tabeli nie określono klucza głównego mechanizm bazy szuka odpowiedniej kolumny, na której taki indeks zostanie założony. Najpierw poszukiwane są kolumny z atrybutem `UNIQUE`, a jeżeli takiej brak to tworzona jest syntetyczna kolumna przechowująca identyfikatory wierszy i na niej zakładany jest taki indeks o nazwie `GEN_CLUST_INDEX`.  
 
 Poniżej przykład 'ręcznego' stworzenia indeksu.
 
@@ -37,7 +37,7 @@ CREATE INDEX nazwa_indeksu ON czary_mary(nazwa_czaru);
 
 ### **4.3 Instrukcja CHECK**
 
-Począwszy od wersji 8.0.16 MySQL instrukcje `CHECK` są poprawnie interpretowane i można ich używać do osadzania prostych mechanizmów walidacji danych. W wersjach wcześniejszych polecenie było parsowane, ale ignorowane przez system bazodanowy MySQL.
+Począwszy od wersji 8.0.16 MySQL instrukcje `CHECK` są poprawnie interpretowane i można ich używać do osadzania prostych mechanizmów walidacji danych. W wersjach wcześniejszych polecenie było parsowane, ale ignorowane (brak faktycznych efektów) przez system bazodanowy MySQL.
 
 **Przykład 3:**
 ```sql
@@ -85,7 +85,7 @@ Korzystając z `CHECK` dodaj dwa dowolne warunki na wybranej przez siebie tabeli
 
 ### **4.4 Wyzwalacze.**
 
-Wyzwalacze (ang. trigger) są strukturami, które są automatycznie uruchamiane przez bazę danych w momencie, w którym warunek ich uruchomienia został spełniony. Takim warunkiem może być operacja wstawienia nowego rekordu, aktualizacji rekordu czy jego usunięcia (INSERT, UPDATE, DELETE). Operacje zadeklarowane w wyzwalaczu mogą zostać wykonane przed (BEFORE) lub po (AFTER) wystąpieniu zdarzenia.
+**Wyzwalacze (ang. trigger)** są strukturami, które są automatycznie uruchamiane przez bazę danych w momencie, w którym warunek ich uruchomienia został spełniony. Takim warunkiem może być operacja wstawienia nowego rekordu, aktualizacji rekordu czy jego usunięcia (**INSERT, UPDATE, DELETE**). Operacje zadeklarowane w wyzwalaczu mogą zostać wykonane przed (**BEFORE**) lub po (**AFTER**) wystąpieniu zdarzenia.
 Jako, że domyślnym znakiem oddzielającym zapytania SQL od siebie (ang. delimiter) jest `';'` a taki znak może wystąpić w 'ciele' wyzwalacza wielokrotnie, powinniśmy najpierw zmienić ten domyślny ogranicznik na coś co ma małe szanse wystąpić w zapytaniu, np. `//` lub `&&`, które są spotykane najczęściej. Po zakończeniu bloku kodu wracamy do poprzednich ustawień.
 
 **Przykład 4:**
@@ -104,7 +104,7 @@ END
 DELIMITER ;
 ```
 
-Powyższy wyzwalacz o nazwie towar_before_insert zostanie uruchomiony w przed operacją `INSERT` na tabeli towar i jeżeli nowy rekord (`NEW`) i jego wartość pola `cena_zakupu` będzie mniejsza od 0, zostanie podstawiona wartość 0. Dopiero wtedy rekord zostanie zapisany do bazy danych. Ta operacja jest powtarzana dla każdego rekordu poprzed pętlę `FOR EACH ROW`.
+Powyższy wyzwalacz o nazwie towar_before_insert zostanie uruchomiony przed operacją `INSERT` na tabeli towar i jeżeli nowy rekord (`NEW`) i jego wartość pola `cena_zakupu` będzie mniejsza od 0, zostanie podstawiona wartość 0. Dopiero wtedy rekord zostanie zapisany do bazy danych. Ta operacja jest powtarzana dla każdego rekordu poprzed pętlę `FOR EACH ROW`.
 
 Istniejące wyzwalacze, lub kod wyzwalacza możemy wyświetlić poniższymi poleceniami:
 ```sql
@@ -211,7 +211,7 @@ $$
 DELIMITER ;
 ```
 
-Korzystajac z procedur i wyzwalaczy możemy usprawnić mechanizm walidacji danych na poziomie bazy. Z racji tego, że w systemie MySQL nie możemy w ramach pojedynczego wyzwalacza określić kilku zdarzeń jego uruchomienia. Możemy jednak zamiast przepisywać ten sam kod ciała wyzwalacza uruchomić procedurę z jego wnętrza.
+Korzystając z procedur i wyzwalaczy możemy usprawnić mechanizm walidacji danych na poziomie bazy. W systemie MySQL nie możemy w ramach pojedynczego wyzwalacza określić kilku zdarzeń jego uruchomienia. Możemy jednak zamiast przepisywać ten sam kod ciała wyzwalacza uruchomić procedurę z jego wnętrza.
 Instrukcja `SIGNAL SQLSTATE '45000' ...` jest mechanizmem zwracającym komunikat (wyjątek) na wyjściu, a wartość 45000 oznacza 'unhandled user-defined exception' czyli poczynając od tego numeru możemy okreslać włane wyjątki dla konkretnej bazy danych, opisując je następnie komunikatami, które mogą znaleźć się również w finalnej dokumentacji projektu ułatwiając analizę zdarzeń. 
 Więcej: https://dev.mysql.com/doc/refman/8.0/en/signal.html
 
@@ -286,7 +286,7 @@ END //
 select count_pracownicy();
 ```
 
-Warto wspomnieć o innych różnicach między funkcjami a procedurami aby rozwiać wątpliwości, że zawsze można ich używać zamiennie (dla funkcji i procedur tworzonych przez użytkownika). Otóż funkcje mają kilka istotnych ograniczeń względem procedur i nie możemy korzystać z transakcji (przynajmniej nie w wersji MySQL, z której korzystamy na zajęciach). Transakcja to operacja (lub zbiór operacji), które dzięki mechanizmom bazy danych pozwala na ich atomowe wykonanie i przywrócenie zmian, jeżeli jedna z operacji się nie powiedzie. 
+Warto wspomnieć o innych różnicach między funkcjami a procedurami aby rozwiać wątpliwości, że zawsze można ich używać zamiennie (dla funkcji i procedur tworzonych przez użytkownika). Otóż funkcje mają kilka istotnych ograniczeń względem procedur i nie możemy korzystać z transakcji. Transakcja to operacja (lub zbiór operacji), które dzięki mechanizmom bazy danych pozwala na ich atomowe wykonanie i przywrócenie zmian (ang. rollback), jeżeli jedna z operacji się nie powiedzie. 
 
 W funkcjach nie są dozwolone poniższe polecenia SQL:
 
