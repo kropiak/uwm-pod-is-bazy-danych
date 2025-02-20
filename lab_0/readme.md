@@ -9,11 +9,11 @@
 > Przy próbie pierwszego połączenia może pojawić się monit z odciskiem palca serwera i informacją, że nie jest to zewnętrzny certyfikat i nie ma 100% pewności (a czy kiedykolwiek jest?), że to właśnie ten serwer. Jeżeli chcemy sie jednak połączyć to wybieramy opcję `Tak`.
 
 3. Po połączeniu logujemy się do konta shellowego:
-* Login: nazwisko studenta bez polskich ogonków + pierwsza litera imienia, np. Jan Kowalski to login kowalskij
+* Login: prefix `is_` oraz nazwisko studenta bez polskich ogonków + pierwsza litera imienia, np. Jan Kowalski to login `is_kowalskij`
 * Hasło: imię studenta małymi literami bez polskich ogonków
 4. Zmieniamy domyślne hasło poleceniem `passwd` i postępujemy zgodnie z poleceniami na ekranie.
-5. Logujemy się do bazy MySQL poleceniem: `mysql –u user –p` gdzie user to nazwa użytkownika bazy danych, która w tym przypadku pokrywa się z loginem do konta shellowego. Hasło udostępnia prowadzący zajęcia.
-6. Zmieniamy hasło do bazy poleceniem: `ALTER USER 'user'@'localhost' IDENTIFIED BY 'nowehaslo';`
+5. Logujemy się do bazy MySQL poleceniem: `mysql –u user –p` gdzie user to nazwa użytkownika bazy danych, która w tym przypadku pokrywa się z loginem do konta shellowego. Hasło startowe udostępnia prowadzący zajęcia.
+6. Zmieniamy hasło do bazy poleceniem: `ALTER USER 'user'@'localhost' IDENTIFIED BY 'nowehaslo';`. Hasło musi spełniać wymogi bezpieczeństwa: nie któtsze niż 8 znaków (rekomendowane 10+ znaków), duża i mała litera, cyfra oraz znak specjalny.
 7. Wybieramy własną bazę poprzez `use nazwa_bazy;` i możemy pracować.
 
 ## **2.Instrukcja logowania poprzez MySQL Workbench**
@@ -22,6 +22,8 @@ Program możemy pobrać z adresu: https://dev.mysql.com/downloads/workbench/
 
 
 2.1 Serwer MySQL nie jest dostępny na zewnątrz (jego port nie jest wystawiony przez zaporę), więc aby połączyć się z nim musimy utworzyć tunel SSH łączący komputer lokalny z serwerem na porcie 3306 (domyślny port serwera MySQL). Należy to zrobić w opcjach programu Putty w zakładce `Connection -> SSH -> Tunnels` i podać dane tak jak na zrzucie poniżej. Następnie klikamy przycisk `Add` i na liście powyżej powinien pojawić się wpis jak na zrzucie.
+
+Należy przy tym pamiętać, że taka konfiguracja przy próbie połączenia powoduje wykorzystanie lokalnego portu 3306 do komunikacji z hostem zdalnym poprzez tunel, więc jeżeli ten port jest już zajęty należy dostosować konfigurację lokalną (np. zatrzymanie usługi MySql lokalnie, zmiana domyślnego portu lub zmiana lokalnego portu, który ma zostac mapowany na zdalny port 3306).
 
 ![Konfiguracja Putty](putty_conf.png)
 
@@ -44,13 +46,3 @@ Należy zapisać zmiany wracając na zakładkę `Session` wybierając odpowiedni
 Po pomyślnym połączeniu ekran powinien wyglądać podobnie do tego poniżej. Różnica będzie w liście baz (SCHEMAS).
 
 ![MySQL Workbench](workbench2.png)
-
-## Zmiana hasła do bazy MySQL
-
-Można to zrobić poleceniem SQL:
-```sql
-SET PASSWORD FOR 'user'@'%'=PASSWORD('nowe_haslo');
-flush privileges;
-```
-
-Gdzie `user` zamieniamy na nazwę naszego użytkownika a `nowe_haslo` na nowe hasło, które chcemy ustawić.

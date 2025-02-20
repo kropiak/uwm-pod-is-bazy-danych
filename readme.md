@@ -1,5 +1,5 @@
-# Zaawansowane Technologie Informatyczne
-## _Przedmiot: bazy danych_
+# Kierunek: Informatyka stosowana
+## _Przedmiot: Systemy baz danych_
 
 ### **1. Cel przedmiotu**
 
@@ -15,9 +15,9 @@ Zaliczenie przedmiotu odbędzie się na podstawie oceny pracy studenta w trakcie
 
 ### **3. Materiały**
 
-Materiały są udostępniane studentm w tym repozytorium, ale jako dodatkowe, komplementarne źródła wiedzy student powinien wykorzystać:
+Materiały są udostępniane studentom w tym repozytorium, ale jako dodatkowe, komplementarne źródła wiedzy student powinien wykorzystać:
 * Oficjaną dokumentację: https://dev.mysql.com/doc/,
 * szczególnie dla wersji wykorzystywanej na zajęciach: https://dev.mysql.com/doc/refman/8.0/en/
 * jedną z lepszych niezależnych stron omawiających MySQL: https://www.mysqltutorial.org/
 * tradycyjnie już W3Schools: https://www.w3schools.com/mySQl/default.asp
-* Kanal Pasja Informatyki w serwisie YouTube, gdzie można znaleźć wiele interesujących materiałów, również kurs MySQL: https://www.youtube.com/channel/UCzn6vAfspIcagLax1fck_jw
+* Kanał Pasja Informatyki w serwisie YouTube, gdzie można znaleźć wiele interesujących materiałów, również kurs MySQL: https://www.youtube.com/watch?v=99JAI24Zd24&list=PLOYHgt8dIdoymv-Wzvs8M-OsKFD31VTVZ
