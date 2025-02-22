@@ -20,6 +20,7 @@
 
 Program możemy pobrać z adresu: https://dev.mysql.com/downloads/workbench/
 
+**Opcja 1 - tunel SSH poprzez Putty + Workbench**
 
 2.1 Serwer MySQL nie jest dostępny na zewnątrz (jego port nie jest wystawiony przez zaporę), więc aby połączyć się z nim musimy utworzyć tunel SSH łączący komputer lokalny z serwerem na porcie 3306 (domyślny port serwera MySQL). Należy to zrobić w opcjach programu Putty w zakładce `Connection -> SSH -> Tunnels` i podać dane tak jak na zrzucie poniżej. Następnie klikamy przycisk `Add` i na liście powyżej powinien pojawić się wpis jak na zrzucie.
 
@@ -46,3 +47,11 @@ Należy zapisać zmiany wracając na zakładkę `Session` wybierając odpowiedni
 Po pomyślnym połączeniu ekran powinien wyglądać podobnie do tego poniżej. Różnica będzie w liście baz (SCHEMAS).
 
 ![MySQL Workbench](workbench2.png)
+
+**Opcja 2 - konfiguracja połączenia SSH bezpośrednio w MySQL Workbench**
+
+Można pominąć wykorzystanie Pytty do zestawienia połączenia SSH i skonfigurować to od razu poprzez MySQL Workbench.
+
+Wybierając opcję konfiguracji nowego połączenia wybieramy `Standard TCP/IP over SSH` jak na poniższym zrzucie ekranu. Dalej dane są już takie same jak w opcji numer 1, ale wszystko odbywa się na jednym formularzu.
+
+![Workbench](workbench_3.png)
