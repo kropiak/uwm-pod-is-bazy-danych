@@ -1,4 +1,4 @@
-# Bazy danych. Laboratorium 1
+# Systemy baz danych. Laboratorium 1
 
 ## **1. Wstęp**
 
@@ -39,6 +39,8 @@ Relacyjne bazy danych (RDBMS - Relational Database Management System) są zazwyc
 
 > **Jakiś obraz udziału rynkowego poszczególnych rozwiązań można znaleźć chociażby tutaj:**
 > * https://6sense.com/tech/relational-databases
+
+Dzięki tym relacjom możliwe jest przechowywanie danych powiązanych ze sobą (np. faktura i jej pozycje) w oddzielnych tabelach, ale w sposób spójny.
 
 ### **1.3 Krótka historia MySQL**
 
