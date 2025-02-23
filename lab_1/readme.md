@@ -145,7 +145,6 @@ Kolumna `id` posiada dodatkowe atrybuty. `AUTO_INCREMENT` jest atrybutem, który
   * wartości w kolumnie muszą być unikalne (mechanizm bazy będzie tego pilnował i uniemożliwiał wstawienie duplikatów),
   * wartość w tej kolumnie nie może być `NULL`,
 - tabela może posiadać tylko jeden klucz główny, ale może on się składać z jednej lub wielu kolumn,
-- 
 
 Klucze główne oraz obce (o czym później) można również dodać tak jak kolumnę tabeli. Takie podejście jest wymagane jeżeli klucz główny składa się z więcej niż jednej kolumny.
 
@@ -297,7 +296,7 @@ Wykonaj zadania z pliku [zadania_1.md](zadania_1.md) a rozwiązania zapisuj w pl
 
 W relacyjnych bazach danych do tworzenia relacji wykorzystywany jest klucz główny oraz klucz obcy. Klucz obcy można zdefiniować jako kopię (odwołanie) klucza głównego w innej tabeli. Pozwala to na rozbijanie większych zbiorów danych na mniejsze poprzez proces normalizacji bazy danych, tworzenie większej ilości tabel powiązanych ze sobą relacjami. Ten mechanizm pozwala również na zachowanie spójności danych. Rozważmy poniższy przykład.
 
-**Przykład **
+**Przykład 14**
 ```sql
 CREATE TABLE uczelnia (id int auto_increment PRIMARY KEY, nazwa VARCHAR(400));
 
@@ -315,7 +314,7 @@ CREATE TABLE `student` (`indeks` varchar(10) NOT NULL,`imie` tinytext,`nazwisko`
 
 Stworzony wcześniej klucz posiada nazwę `student_ibfk_1` i ta nazwa potrzebna jest aby taki klucz obcy usunąć.
 
-**Przykład 14**
+**Przykład 15**
 ```sql
 ALTER TABLE student DROP FOREIGN KEY student_ibfk_1;
 ```
@@ -328,14 +327,14 @@ Co jednak gdy z tabeli `uczelnia` będziemy chcieli usunąć rekord, do którego
 Wartość `RESTRICT` uniemożliwia usunięcie rekordu głównego póki występują rekordy potomne. Określenie tej wartości (lub wartości `NO ACTION`) lub pominięcie sekcji `ON DELETE` ma takie same działanie.
 `CASCADE` powoduje natomiast usunięcie rekordu głównego i wszystkich rekordów powiązanych. Ustawienie `SET NULL` powoduje usunięcie rekordu głównego i wstawienie wartości `NULL` w kolumnie powiązanego klucza obcego. Należy pamiętać, że kolumna klucza obcego nie może mieć w takim przypadku ustawionego atrybutu `NOT NULL`. `SET DEFAULT` mimo, że jest interpretowane przez parser MySQL nie jest dłużej obsługiwane.
 
-**Przykład 15**
+**Przykład 16**
 ```sql
 CREATE TABLE student(indeks VARCHAR(10) PRIMARY KEY, imie TINYTEXT, nazwisko TINYTEXT, uczelnia int, FOREIGN KEY (uczelnia) REFERENCES uczelnia(id) ON DELETE CASCADE);
 ```
 
 Klucze obce mogą być również dodawane do istniejących tabel poprzez polecenie `ALTER`.
 
-**Przykład 16**
+**Przykład 17**
 ```sql
 CREATE TABLE student(indeks VARCHAR(10) PRIMARY KEY, imie TINYTEXT, nazwisko TINYTEXT, uczelnia int);
 
